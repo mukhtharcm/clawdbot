@@ -50,13 +50,13 @@ describe("resolveAuthProfileOrder", () => {
     expect(order).toContain("anthropic:default");
   });
 
-  it("prioritizes last-good profile when no preferred override", () => {
+  it("ignores lastGood in favor of round-robin (no lastUsed means oldest)", () => {
     const order = resolveAuthProfileOrder({
       cfg,
       store: { ...store, lastGood: { anthropic: "anthropic:work" } },
       provider: "anthropic",
     });
-    expect(order[0]).toBe("anthropic:work");
+    expect(order[0]).toBe("anthropic:default");
   });
 
   it("uses explicit profiles when order is missing", () => {

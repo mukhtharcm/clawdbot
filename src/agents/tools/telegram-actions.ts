@@ -153,6 +153,7 @@ export async function handleTelegramAction(
       buttons,
       replyToMessageId: replyToMessageId ?? undefined,
       messageThreadId: messageThreadId ?? undefined,
+      asVoice: Boolean(params.asVoice),
     });
     return jsonResult({
       ok: true,

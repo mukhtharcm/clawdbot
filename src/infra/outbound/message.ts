@@ -27,6 +27,7 @@ type MessageSendParams = {
   provider?: string;
   mediaUrl?: string;
   gifPlayback?: boolean;
+  asVoice?: boolean;
   accountId?: string;
   dryRun?: boolean;
   bestEffort?: boolean;
@@ -124,7 +125,13 @@ export async function sendMessage(
       provider,
       to: resolvedTarget.to,
       accountId: params.accountId,
-      payloads: [{ text: params.content, mediaUrl: params.mediaUrl }],
+      payloads: [
+        {
+          text: params.content,
+          mediaUrl: params.mediaUrl,
+          audioAsVoice: params.asVoice,
+        },
+      ],
       deps: params.deps,
       bestEffort: params.bestEffort,
     });
@@ -148,6 +155,7 @@ export async function sendMessage(
       message: params.content,
       mediaUrl: params.mediaUrl,
       gifPlayback: params.gifPlayback,
+      asVoice: params.asVoice,
       accountId: params.accountId,
       provider,
       idempotencyKey: params.idempotencyKey ?? randomIdempotencyKey(),

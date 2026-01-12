@@ -67,6 +67,11 @@ const MessageToolSchema = Type.Object({
   to: Type.Optional(Type.String()),
   message: Type.Optional(Type.String()),
   media: Type.Optional(Type.String()),
+  asVoice: Type.Optional(
+    Type.Boolean({
+      description: "Send audio as a voice message (bubble) instead of a file.",
+    }),
+  ),
   buttons: Type.Optional(
     Type.Array(
       Type.Array(
@@ -345,6 +350,7 @@ export function createMessageTool(options?: MessageToolOptions): AnyAgentTool {
           allowEmpty: true,
         });
         const mediaUrl = readStringParam(params, "media", { trim: false });
+        const asVoice = Boolean(params.asVoice);
         const replyTo = readStringParam(params, "replyTo");
         const threadId = readStringParam(params, "threadId");
         const buttons = params.buttons;
@@ -412,6 +418,7 @@ export function createMessageTool(options?: MessageToolOptions): AnyAgentTool {
               messageThreadId: threadId ?? undefined,
               accountId: accountId ?? undefined,
               buttons,
+              asVoice,
             },
             cfg,
           );

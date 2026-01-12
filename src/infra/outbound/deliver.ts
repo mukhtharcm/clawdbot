@@ -66,6 +66,7 @@ type ProviderHandler = {
   sendMedia: (
     caption: string,
     mediaUrl: string,
+    opts?: { asVoice?: boolean },
   ) => Promise<OutboundDeliveryResult>;
 };
 
@@ -135,12 +136,13 @@ function createProviderHandler(params: {
           accountId: rawAccountId,
         })),
       }),
-      sendMedia: async (caption, mediaUrl) => ({
+      sendMedia: async (caption, mediaUrl, opts) => ({
         provider: "telegram",
         ...(await deps.sendTelegram(to, caption, {
           verbose: false,
           mediaUrl,
           accountId: rawAccountId,
+          asVoice: opts?.asVoice,
         })),
       }),
     },
@@ -292,7 +294,11 @@ export async function deliverOutboundPayloads(params: {
       for (const url of payload.mediaUrls) {
         const caption = first ? payload.text : "";
         first = false;
-        results.push(await handler.sendMedia(caption, url));
+        results.push(
+          await handler.sendMedia(caption, url, {
+            asVoice: payload.audioAsVoice,
+          }),
+        );
       }
     } catch (err) {
       if (!params.bestEffort) throw err;

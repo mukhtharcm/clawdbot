@@ -3,12 +3,14 @@ import type { ReplyPayload } from "../../auto-reply/types.js";
 export type NormalizedOutboundPayload = {
   text: string;
   mediaUrls: string[];
+  audioAsVoice?: boolean;
 };
 
 export type OutboundPayloadJson = {
   text: string;
   mediaUrl: string | null;
   mediaUrls?: string[];
+  audioAsVoice?: boolean;
 };
 
 export function normalizeOutboundPayloads(
@@ -19,6 +21,7 @@ export function normalizeOutboundPayloads(
       text: payload.text ?? "",
       mediaUrls:
         payload.mediaUrls ?? (payload.mediaUrl ? [payload.mediaUrl] : []),
+      audioAsVoice: payload.audioAsVoice,
     }))
     .filter((payload) => payload.text || payload.mediaUrls.length > 0);
 }
@@ -31,6 +34,7 @@ export function normalizeOutboundPayloadsForJson(
     mediaUrl: payload.mediaUrl ?? null,
     mediaUrls:
       payload.mediaUrls ?? (payload.mediaUrl ? [payload.mediaUrl] : undefined),
+    audioAsVoice: payload.audioAsVoice,
   }));
 }
 

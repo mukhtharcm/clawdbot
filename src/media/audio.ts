@@ -1,6 +1,6 @@
 import { getFileExtension } from "./mime.js";
 
-const VOICE_AUDIO_EXTENSIONS = new Set([".oga", ".ogg", ".opus"]);
+const VOICE_AUDIO_EXTENSIONS = new Set([".oga", ".ogg", ".opus", ".wav"]);
 
 export function isVoiceCompatibleAudio(opts: {
   contentType?: string | null;

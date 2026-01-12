@@ -87,6 +87,7 @@ export async function routeReply(
       ? [normalized.mediaUrl]
       : [];
   const replyToId = normalized.replyToId;
+  const audioAsVoice = normalized.audioAsVoice;
 
   // Skip empty replies.
   if (!text.trim() && mediaUrls.length === 0) {
@@ -96,11 +97,12 @@ export async function routeReply(
   const sendOne = async (params: {
     text: string;
     mediaUrl?: string;
+    audioAsVoice?: boolean;
   }): Promise<RouteReplyResult> => {
     if (abortSignal?.aborted) {
       return { ok: false, error: "Reply routing aborted" };
     }
-    const { text, mediaUrl } = params;
+    const { text, mediaUrl, audioAsVoice } = params;
     switch (channel) {
       case "telegram": {
         const replyToMessageId = replyToId
@@ -114,6 +116,8 @@ export async function routeReply(
           messageThreadId: threadId,
           replyToMessageId: resolvedReplyToMessageId,
           accountId,
+          asVoice: audioAsVoice,
+          verbose: true,
         });
         return { ok: true, messageId: result.messageId };
       }
@@ -190,7 +194,7 @@ export async function routeReply(
       return { ok: false, error: "Reply routing aborted" };
     }
     if (mediaUrls.length === 0) {
-      return await sendOne({ text });
+      return await sendOne({ text, audioAsVoice });
     }
 
     let last: RouteReplyResult | undefined;
@@ -200,7 +204,11 @@ export async function routeReply(
       }
       const mediaUrl = mediaUrls[i];
       const caption = i === 0 ? text : "";
-      last = await sendOne({ text: caption, mediaUrl });
+      last = await sendOne({
+        text: caption,
+        mediaUrl,
+        audioAsVoice,
+      });
       if (!last.ok) return last;
     }
 

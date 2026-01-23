@@ -36,6 +36,8 @@ const optionNamesAdd = [
   "httpPort",
   "webhookPath",
   "useEnv",
+  "apiId",
+  "apiHash",
   "homeserver",
   "userId",
   "accessToken",
@@ -169,6 +171,8 @@ export function registerChannelsCli(program: Command) {
     .option("--http-host <host>", "Signal HTTP host")
     .option("--http-port <port>", "Signal HTTP port")
     .option("--webhook-path <path>", "BlueBubbles webhook path")
+    .option("--api-id <id>", "Telegram user API id (my.telegram.org)")
+    .option("--api-hash <hash>", "Telegram user API hash (my.telegram.org)")
     .option("--homeserver <url>", "Matrix homeserver URL")
     .option("--user-id <id>", "Matrix user ID")
     .option("--access-token <token>", "Matrix access token")

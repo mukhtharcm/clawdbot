@@ -37,6 +37,8 @@ export function applyChannelAccountConfig(params: {
   httpPort?: string;
   webhookPath?: string;
   useEnv?: boolean;
+  apiId?: number;
+  apiHash?: string;
   homeserver?: string;
   userId?: string;
   accessToken?: string;
@@ -71,6 +73,8 @@ export function applyChannelAccountConfig(params: {
     httpPort: params.httpPort,
     webhookPath: params.webhookPath,
     useEnv: params.useEnv,
+    apiId: params.apiId,
+    apiHash: params.apiHash,
     homeserver: params.homeserver,
     userId: params.userId,
     accessToken: params.accessToken,

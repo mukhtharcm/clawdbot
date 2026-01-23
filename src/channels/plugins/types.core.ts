@@ -33,6 +33,8 @@ export type ChannelSetupInput = {
   httpPort?: string;
   webhookPath?: string;
   useEnv?: boolean;
+  apiId?: number;
+  apiHash?: string;
   homeserver?: string;
   userId?: string;
   accessToken?: string;

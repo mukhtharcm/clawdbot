@@ -37,6 +37,8 @@ export type ChannelsAddOptions = {
   audienceType?: string;
   audience?: string;
   useEnv?: boolean;
+  apiId?: string | number;
+  apiHash?: string;
   homeserver?: string;
   userId?: string;
   accessToken?: string;
@@ -191,7 +193,12 @@ export async function channelsAddCommand(
         : undefined;
   const groupChannels = parseList(opts.groupChannels);
   const dmAllowlist = parseList(opts.dmAllowlist);
-
+  const apiId =
+    typeof opts.apiId === "number"
+      ? opts.apiId
+      : typeof opts.apiId === "string" && opts.apiId.trim()
+        ? Number.parseInt(opts.apiId, 10)
+        : undefined;
   const validationError = plugin.setup.validateInput?.({
     cfg: nextConfig,
     accountId,
@@ -214,6 +221,8 @@ export async function channelsAddCommand(
       webhookUrl: opts.webhookUrl,
       audienceType: opts.audienceType,
       audience: opts.audience,
+      apiId,
+      apiHash: opts.apiHash,
       homeserver: opts.homeserver,
       userId: opts.userId,
       accessToken: opts.accessToken,
@@ -257,6 +266,8 @@ export async function channelsAddCommand(
     webhookUrl: opts.webhookUrl,
     audienceType: opts.audienceType,
     audience: opts.audience,
+    apiId,
+    apiHash: opts.apiHash,
     homeserver: opts.homeserver,
     userId: opts.userId,
     accessToken: opts.accessToken,

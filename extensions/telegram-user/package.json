@@ -1,0 +1,41 @@
+{
+  "name": "@openclaw/telegram-user",
+  "version": "2026.1.29",
+  "description": "OpenClaw Telegram user (MTProto) channel plugin",
+  "type": "module",
+  "dependencies": {
+    "@clack/prompts": "^0.8.2",
+    "@mtcute/core": "^0.27.6",
+    "@mtcute/dispatcher": "^0.27.6",
+    "@mtcute/node": "^0.27.6",
+    "qrcode-terminal": "^0.12.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "openclaw": "workspace:*"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.1.29"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "channel": {
+      "id": "telegram-user",
+      "label": "Telegram User",
+      "selectionLabel": "Telegram User (MTProto)",
+      "detailLabel": "Telegram User",
+      "docsPath": "/channels/telegram-user",
+      "docsLabel": "telegram-user",
+      "blurb": "login as a Telegram user via QR or phone code; supports DMs + groups.",
+      "order": 12,
+      "quickstartAllowFrom": true
+    },
+    "install": {
+      "npmSpec": "@openclaw/telegram-user",
+      "localPath": "extensions/telegram-user",
+      "defaultChoice": "npm"
+    }
+  }
+}

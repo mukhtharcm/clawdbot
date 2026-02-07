@@ -20,10 +20,11 @@ import { channelLabel, requireValidConfig, shouldUseWizard } from "./shared.js";
 export type ChannelsAddOptions = {
   channel?: string;
   account?: string;
+  apiId?: number | string;
   initialSyncLimit?: number | string;
   groupChannels?: string;
   dmAllowlist?: string;
-} & Omit<ChannelSetupInput, "groupChannels" | "dmAllowlist" | "initialSyncLimit">;
+} & Omit<ChannelSetupInput, "groupChannels" | "dmAllowlist" | "initialSyncLimit" | "apiId">;
 
 function parseList(value: string | undefined): string[] | undefined {
   if (!value?.trim()) {
@@ -163,6 +164,12 @@ export async function channelsAddCommand(
       : typeof opts.initialSyncLimit === "string" && opts.initialSyncLimit.trim()
         ? Number.parseInt(opts.initialSyncLimit, 10)
         : undefined;
+  const apiId =
+    typeof opts.apiId === "number"
+      ? opts.apiId
+      : typeof opts.apiId === "string" && opts.apiId.trim()
+        ? Number.parseInt(opts.apiId, 10)
+        : undefined;
   const groupChannels = parseList(opts.groupChannels);
   const dmAllowlist = parseList(opts.dmAllowlist);
 
@@ -185,6 +192,8 @@ export async function channelsAddCommand(
     webhookUrl: opts.webhookUrl,
     audienceType: opts.audienceType,
     audience: opts.audience,
+    apiId,
+    apiHash: opts.apiHash,
     homeserver: opts.homeserver,
     userId: opts.userId,
     accessToken: opts.accessToken,

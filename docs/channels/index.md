@@ -15,6 +15,7 @@ Text is supported everywhere; media and reactions vary by channel.
 
 - [WhatsApp](/channels/whatsapp) — Most popular; uses Baileys and requires QR pairing.
 - [Telegram](/channels/telegram) — Bot API via grammY; supports groups.
+- [Telegram User](/channels/telegram-user) — MTProto user account with DM + group support (plugin, installed separately).
 - [Discord](/channels/discord) — Discord Bot API + Gateway; supports servers, channels, and DMs.
 - [Slack](/channels/slack) — Bolt SDK; workspace apps.
 - [Feishu](/channels/feishu) — Feishu/Lark bot via WebSocket (plugin, installed separately).
